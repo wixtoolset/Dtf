@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
+
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{2D62850C-9F81-4BE9-BDF3-9379389C8F7B}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <RootNamespace>WixToolset.Dtf.Compression</RootNamespace>
+    <AssemblyName>WixToolset.Dtf.Compression</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="ArchiveException.cs" />
+    <Compile Include="ArchiveFileInfo.cs" />
+    <Compile Include="ArchiveInfo.cs" />
+    <Compile Include="ArchiveProgressEventArgs.cs" />
+    <Compile Include="ArchiveProgressType.cs" />
+    <Compile Include="AssemblyInfo.cs" />
+    <Compile Include="ArchiveFileStreamContext.cs" />
+    <Compile Include="BasicUnpackStreamContext.cs" />
+    <Compile Include="CompressionEngine.cs" />
+    <Compile Include="CompressionLevel.cs" />
+    <Compile Include="CargoStream.cs" />
+    <Compile Include="DuplicateStream.cs" />
+    <Compile Include="IPackStreamContext.cs" />
+    <Compile Include="IUnpackStreamContext.cs" />
+    <Compile Include="OffsetStream.cs" />
+    <Compile Include="SafeNativeMethods.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Compression.cd" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+  <Target Name="AfterBuild" Condition=" '$(NCrunch)' == '' ">
+    <Exec Command="nuget pack $(MSBuildThisFile) -Symbols -IncludeReferencedProjects -OutputDirectory $(OutputPath) -Properties Configuration=$(Configuration)" />
+  </Target>
+
+  <Import Project="..\..\packages\Nerdbank.GitVersioning.2.0.37-beta\build\Nerdbank.GitVersioning.targets" Condition="Exists('..\..\packages\Nerdbank.GitVersioning.2.0.37-beta\build\Nerdbank.GitVersioning.targets')" />
+  <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
+    <PropertyGroup>
+      <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
+    </PropertyGroup>
+    <Error Condition="!Exists('..\..\packages\Nerdbank.GitVersioning.2.0.37-beta\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\packages\Nerdbank.GitVersioning.2.0.37-beta\build\Nerdbank.GitVersioning.targets'))" />
+  </Target>
+</Project>

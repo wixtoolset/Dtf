@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>WiX Toolset Team</authors>
+    <owners>WiX Toolset Team</owners>
+    <licenseUrl>https://github.com/wixtoolset/Dtf/blob/master/LICENSE.TXT</licenseUrl>
+    <projectUrl>https://github.com/wixtoolset/Dtf</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+  </metadata>
+</package>
