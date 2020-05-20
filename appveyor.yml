@@ -3,7 +3,12 @@
 #  Do NOT modify this file. Update the canonical version in Home\repo-template\src\appveyor.yml
 #  then update all of the repos.
 
-image: Visual Studio 2017
+branches:
+  only:
+    - master
+    - develop
+
+image: Visual Studio 2019
 
 version: 0.0.0.{build}
 configuration: Release
@@ -15,6 +20,8 @@ environment:
 
 build_script:
   - appveyor.cmd
+
+test: off
 
 pull_requests:
   do_not_increment_build_number: true
@@ -28,6 +35,8 @@ skip_tags: true
 artifacts:
 - path: build\Release\**\*.nupkg
   name: nuget
+- path: build\Release\**\*.msi
+  name: msi
 
 notifications:
 - provider: Slack
