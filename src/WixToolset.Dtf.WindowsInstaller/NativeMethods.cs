@@ -221,7 +221,7 @@ internal static class NativeMethods
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiProvideAssembly(string szAssemblyName, string szAppContext, uint dwInstallMode, uint dwAssemblyInfo, StringBuilder lpPathBuf, ref uint cchPathBuf);
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiInstallMissingComponent(string szProduct, string szComponent, int eInstallState);
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiInstallMissingFile(string szProduct, string szFile);
-[DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiLocateComponent(string szComponent, StringBuilder lpPathBuf, ref uint cchBuf);
+[DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern int MsiLocateComponent(string szComponent, StringBuilder lpPathBuf, ref uint cchBuf);
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiGetProductProperty(int hProduct, string szProperty, StringBuilder lpValueBuf, ref uint cchValueBuf);
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiGetFeatureInfo(int hProduct, string szFeature, out uint lpAttributes, StringBuilder lpTitleBuf, ref uint cchTitleBuf, StringBuilder lpHelpBuf, ref uint cchHelpBuf);
 [DllImport("msi.dll", CharSet=CharSet.Unicode)] internal static extern uint MsiVerifyDiskSpace(int hInstall);
