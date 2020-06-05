@@ -8,19 +8,19 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
     using System.Security;
     using System.Text;
     using System.Reflection;
-    using WixToolset.Dtf.Compression;
-    using WixToolset.Dtf.Compression.Cab;
-    using WixToolset.Dtf.Resources;
-    using ResourceCollection = WixToolset.Dtf.Resources.ResourceCollection;
+    using Compression;
+    using Compression.Cab;
+    using Resources;
+    using ResourceCollection = Resources.ResourceCollection;
 
     /// <summary>
     /// Command-line tool for building self-extracting custom action packages.
     /// Appends cabbed CA binaries to SfxCA.dll and fixes up the result's
     /// entry-points and file version to look like the CA module.
     /// </summary>
-    public class MakeSfxCA
+    public static class MakeSfxCA
     {
-        private const string RequiredWIAssembly = "WixToolset.Dtf.WindowsInstaller.dll";
+        private const string REQUIRED_WI_ASSEMBLY = "WixToolset.Dtf.WindowsInstaller.dll";
 
         private static TextWriter log;
 
@@ -37,7 +37,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
             w.WriteLine("Usage: MakeSfxCA <outputca.dll> SfxCA.dll <inputca.dll> [support files ...]");
             w.WriteLine();
             w.WriteLine("Makes a self-extracting managed MSI CA or UI DLL package.");
-            w.WriteLine("Support files must include " + MakeSfxCA.RequiredWIAssembly);
+            w.WriteLine("Support files must include " + MakeSfxCA.REQUIRED_WI_ASSEMBLY);
             w.WriteLine("Support files optionally include CustomAction.config/EmbeddedUI.config");
         }
 
@@ -54,14 +54,14 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                 return 1;
             }
 
-            string output = args[0];
-            string sfxdll = args[1];
-            string[] inputs = new string[args.Length - 2];
+            var output = args[0];
+            var sfxDll = args[1];
+            var inputs = new string[args.Length - 2];
             Array.Copy(args, 2, inputs, 0, inputs.Length);
 
             try
             {
-                Build(output, sfxdll, inputs, Console.Out);
+                Build(output, sfxDll, inputs, Console.Out);
                 return 0;
             }
             catch (ArgumentException ex)
@@ -86,18 +86,18 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// </summary>
         /// <exception cref="Exception">Various exceptions are thrown
         /// if things go wrong.</exception>
-        public static void Build(string output, string sfxdll, IList<string> inputs, TextWriter log)
+        public static void Build(string output, string sfxDll, IList<string> inputs, TextWriter log)
         {
             MakeSfxCA.log = log;
 
-            if (String.IsNullOrEmpty(output))
+            if (string.IsNullOrEmpty(output))
             {
                 throw new ArgumentNullException("output");
             }
 
-            if (String.IsNullOrEmpty(sfxdll))
+            if (string.IsNullOrEmpty(sfxDll))
             {
-                throw new ArgumentNullException("sfxdll");
+                throw new ArgumentNullException("sfxDll");
             }
 
             if (inputs == null || inputs.Count == 0)
@@ -105,12 +105,12 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                 throw new ArgumentNullException("inputs");
             }
 
-            if (!File.Exists(sfxdll))
+            if (!File.Exists(sfxDll))
             {
-                throw new FileNotFoundException(sfxdll);
+                throw new FileNotFoundException(sfxDll);
             }
 
-            string customActionAssembly = inputs[0];
+            var customActionAssembly = inputs[0];
             if (!File.Exists(customActionAssembly))
             {
                 throw new FileNotFoundException(customActionAssembly);
@@ -118,12 +118,12 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             inputs = MakeSfxCA.SplitList(inputs);
 
-            IDictionary<string, string> inputsMap = MakeSfxCA.GetPackFileMap(inputs);
+            var inputsMap = MakeSfxCA.GetPackFileMap(inputs);
 
-            bool foundWIAssembly = false;
-            foreach (string input in inputsMap.Keys)
+            var foundWIAssembly = false;
+            foreach (var input in inputsMap.Keys)
             {
-                if (String.Compare(input, MakeSfxCA.RequiredWIAssembly,
+                if (string.Compare(input, MakeSfxCA.REQUIRED_WI_ASSEMBLY,
                     StringComparison.OrdinalIgnoreCase) == 0)
                 {
                     foundWIAssembly = true;
@@ -132,7 +132,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             if (!foundWIAssembly)
             {
-                throw new ArgumentException(MakeSfxCA.RequiredWIAssembly +
+                throw new ArgumentException(MakeSfxCA.REQUIRED_WI_ASSEMBLY +
                     " must be included in the list of support files. " +
                     "If using the MSBuild targets, make sure the assembly reference " +
                     "has the Private (Copy Local) flag set.");
@@ -140,8 +140,8 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             MakeSfxCA.ResolveDependentAssemblies(inputsMap, Path.GetDirectoryName(customActionAssembly));
 
-            IDictionary<string, string> entryPoints = MakeSfxCA.FindEntryPoints(customActionAssembly);
-            string uiClass = MakeSfxCA.FindEmbeddedUIClass(customActionAssembly);
+            var entryPoints = MakeSfxCA.FindEntryPoints(customActionAssembly);
+            var uiClass = MakeSfxCA.FindEmbeddedUIClass(customActionAssembly);
 
             if (entryPoints.Count == 0 && uiClass == null)
             {
@@ -154,7 +154,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                     "CA and UI entry points cannot be in the same assembly: " + customActionAssembly);
             }
 
-            string dir = Path.GetDirectoryName(output);
+            var dir = Path.GetDirectoryName(output);
             if (dir.Length > 0 && !Directory.Exists(dir))
             {
                 Directory.CreateDirectory(dir);
@@ -162,7 +162,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             using (Stream outputStream = File.Create(output))
             {
-                MakeSfxCA.WriteEntryModule(sfxdll, outputStream, entryPoints, uiClass);
+                MakeSfxCA.WriteEntryModule(sfxDll, outputStream, entryPoints, uiClass);
             }
 
             MakeSfxCA.CopyVersionResource(customActionAssembly, output);
@@ -179,13 +179,13 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// <returns>New list with resulting split items.</returns>
         private static IList<string> SplitList(IList<string> list)
         {
-            List<string> newList = new List<string>(list.Count);
+            var newList = new List<string>(list.Count);
 
-            foreach (string item in list)
+            foreach (var item in list)
             {
-                if (!String.IsNullOrEmpty(item))
+                if (!string.IsNullOrEmpty(item))
                 {
-                    foreach (string splitItem in item.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
+                    foreach (var splitItem in item.Split(new char[] { ';' }, StringSplitOptions.RemoveEmptyEntries))
                     {
                         newList.Add(splitItem);
                     }
@@ -204,7 +204,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// Also searches the assembly's directory for unspecified dependent assemblies, and adds them
         /// to the list of input files if found.
         /// </remarks>
-        private static void ResolveDependentAssemblies(IDictionary<string, string> inputsMap, string inputDir)
+        private static void ResolveDependentAssemblies(IDictionary<string, string> inputFiles, string inputDir)
         {
             AppDomain.CurrentDomain.ReflectionOnlyAssemblyResolve += delegate(object sender, ResolveEventArgs args)
             {
@@ -212,13 +212,13 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                 Assembly assembly = null;
 
                 // First, try to find the assembly in the list of input files.
-                foreach (string inputFile in inputsMap.Values)
+                foreach (var inputFile in inputFiles.Values)
                 {
-                    string inputName = Path.GetFileNameWithoutExtension(inputFile);
-                    string inputExtension = Path.GetExtension(inputFile);
-                    if (String.Equals(inputName, resolveName.Name, StringComparison.OrdinalIgnoreCase) &&
-                        (String.Equals(inputExtension, ".dll", StringComparison.OrdinalIgnoreCase) ||
-                         String.Equals(inputExtension, ".exe", StringComparison.OrdinalIgnoreCase)))
+                    var inputName = Path.GetFileNameWithoutExtension(inputFile);
+                    var inputExtension = Path.GetExtension(inputFile);
+                    if (string.Equals(inputName, resolveName.Name, StringComparison.OrdinalIgnoreCase) &&
+                        (string.Equals(inputExtension, ".dll", StringComparison.OrdinalIgnoreCase) ||
+                         string.Equals(inputExtension, ".exe", StringComparison.OrdinalIgnoreCase)))
                     {
                         assembly = MakeSfxCA.TryLoadDependentAssembly(inputFile);
 
@@ -249,7 +249,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                         if (assembly != null)
                         {
                             // Add this detected dependency to the list of files to be packed.
-                            inputsMap.Add(Path.GetFileName(assemblyPath), assemblyPath);
+                            inputFiles.Add(Path.GetFileName(assemblyPath), assemblyPath);
                         }
                     }
                 }
@@ -268,17 +268,15 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
                 if (assembly != null)
                 {
-                    if (String.Equals(assembly.GetName().ToString(), resolveName.ToString()))
+                    if (string.Equals(assembly.GetName().ToString(), resolveName.ToString()))
                     {
                         log.WriteLine("    Loaded dependent assembly: " + assembly.Location);
                         return assembly;
                     }
-                    else
-                    {
-                        log.WriteLine("    Warning: Loaded mismatched dependent assembly: " + assembly.Location);
-                        log.WriteLine("      Loaded assembly   : " + assembly.GetName());
-                        log.WriteLine("      Reference assembly: " + resolveName);
-                    }
+
+                    log.WriteLine("    Warning: Loaded mismatched dependent assembly: " + assembly.Location);
+                    log.WriteLine("      Loaded assembly   : " + assembly.GetName());
+                    log.WriteLine("      Reference assembly: " + resolveName);
                 }
                 else
                 {
@@ -328,13 +326,13 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             string uiClass = null;
 
-            Assembly assembly = Assembly.ReflectionOnlyLoadFrom(module);
+            var assembly = Assembly.ReflectionOnlyLoadFrom(module);
 
-            foreach (Type type in assembly.GetExportedTypes())
+            foreach (var type in assembly.GetExportedTypes())
             {
                 if (!type.IsAbstract)
                 {
-                    foreach (Type interfaceType in type.GetInterfaces())
+                    foreach (var interfaceType in type.GetInterfaces())
                     {
                         if (interfaceType.FullName == "WixToolset.Dtf.WindowsInstaller.IEmbeddedUI")
                         {
@@ -364,18 +362,18 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
             log.WriteLine("Searching for custom action entry points " +
                 "in {0}", Path.GetFileName(module));
 
-            Dictionary<string, string> entryPoints = new Dictionary<string, string>();
+            var entryPoints = new Dictionary<string, string>();
 
-            Assembly assembly = Assembly.ReflectionOnlyLoadFrom(module);
+            var assembly = Assembly.ReflectionOnlyLoadFrom(module);
 
-            foreach (Type type in assembly.GetExportedTypes())
+            foreach (var type in assembly.GetExportedTypes())
             {
-                foreach (MethodInfo method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
+                foreach (var method in type.GetMethods(BindingFlags.Public | BindingFlags.Static))
                 {
-                    string entryPointName = MakeSfxCA.GetEntryPoint(method);
+                    var entryPointName = MakeSfxCA.GetEntryPoint(method);
                     if (entryPointName != null)
                     {
-                        string entryPointPath = String.Format(
+                        var entryPointPath = string.Format(
                             "{0}!{1}.{2}",
                             Path.GetFileNameWithoutExtension(module),
                             type.FullName,
@@ -416,14 +414,14 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                     StringComparison.Ordinal))
                 {
                     string entryPointName = null;
-                    foreach (CustomAttributeTypedArgument argument in attribute.ConstructorArguments)
+                    foreach (var argument in attribute.ConstructorArguments)
                     {
                         // The entry point name is the first positional argument, if specified.
                         entryPointName = (string) argument.Value;
                         break;
                     }
 
-                    if (String.IsNullOrEmpty(entryPointName))
+                    if (string.IsNullOrEmpty(entryPointName))
                     {
                         entryPointName = method.Name;
                     }
@@ -444,12 +442,12 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// </remarks>
         private static int GetEntryPointSlotCount(byte[] fileBytes, string entryPointFormat)
         {
-            for (int count = 0; ; count++)
+            for (var count = 0; ; count++)
             {
-                string templateName = String.Format(entryPointFormat, count);
-                byte[] templateAsciiBytes = Encoding.ASCII.GetBytes(templateName);
+                var templateName = string.Format(entryPointFormat, count);
+                var templateAsciiBytes = Encoding.ASCII.GetBytes(templateName);
 
-                int nameOffset = FindBytes(fileBytes, templateAsciiBytes);
+                var nameOffset = FindBytes(fileBytes, templateAsciiBytes);
                 if (nameOffset < 0)
                 {
                     return count;
@@ -468,12 +466,12 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// CA-specific values.
         /// </remarks>
         private static void WriteEntryModule(
-            string sfxdll, Stream outputStream, IDictionary<string, string> entryPoints, string uiClass)
+            string sfxDll, Stream outputStream, IDictionary<string, string> entryPoints, string uiClass)
         {
             log.WriteLine("Modifying SfxCA.dll stub");
 
             byte[] fileBytes;
-            using (FileStream readStream = File.OpenRead(sfxdll))
+            using (var readStream = File.OpenRead(sfxDll))
             {
                 fileBytes = new byte[(int) readStream.Length];
                 readStream.Read(fileBytes, 0, fileBytes.Length);
@@ -482,9 +480,9 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
             const string ENTRYPOINT_FORMAT = "CustomActionEntryPoint{0:d03}";
             const int MAX_ENTRYPOINT_NAME = 72;
             const int MAX_ENTRYPOINT_PATH = 160;
-            byte[] emptyBytes = new byte[0];
+            //var emptyBytes = new byte[0];
 
-            int slotCount = MakeSfxCA.GetEntryPointSlotCount(fileBytes, ENTRYPOINT_FORMAT);
+            var slotCount = MakeSfxCA.GetEntryPointSlotCount(fileBytes, ENTRYPOINT_FORMAT);
 
             if (slotCount == 0)
             {
@@ -493,46 +491,46 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
             if (entryPoints.Count > slotCount)
             {
-                throw new ArgumentException(String.Format(
+                throw new ArgumentException(string.Format(
                     "The custom action assembly has {0} entrypoints, which is more than the maximum ({1}). " +
                     "Refactor the custom actions or add more entrypoint slots in SfxCA\\EntryPoints.h.",
                     entryPoints.Count, slotCount));
             }
 
-            string[] slotSort = new string[slotCount];
-            for (int i = 0; i < slotCount - entryPoints.Count; i++)
+            var slotSort = new string[slotCount];
+            for (var i = 0; i < slotCount - entryPoints.Count; i++)
             {
-                slotSort[i] = String.Empty;
+                slotSort[i] = string.Empty;
             }
 
             entryPoints.Keys.CopyTo(slotSort, slotCount - entryPoints.Count);
             Array.Sort<string>(slotSort, slotCount - entryPoints.Count, entryPoints.Count, StringComparer.Ordinal);
 
-            for (int i = 0; ; i++)
+            for (var i = 0; ; i++)
             {
-                string templateName = String.Format(ENTRYPOINT_FORMAT, i);
-                byte[] templateAsciiBytes = Encoding.ASCII.GetBytes(templateName);
-                byte[] templateUniBytes = Encoding.Unicode.GetBytes(templateName);
+                var templateName = string.Format(ENTRYPOINT_FORMAT, i);
+                var templateAsciiBytes = Encoding.ASCII.GetBytes(templateName);
+                var templateUniBytes = Encoding.Unicode.GetBytes(templateName);
 
-                int nameOffset = MakeSfxCA.FindBytes(fileBytes, templateAsciiBytes);
+                var nameOffset = MakeSfxCA.FindBytes(fileBytes, templateAsciiBytes);
                 if (nameOffset < 0)
                 {
                     break;
                 }
 
-                int pathOffset = MakeSfxCA.FindBytes(fileBytes, templateUniBytes);
+                var pathOffset = MakeSfxCA.FindBytes(fileBytes, templateUniBytes);
                 if (pathOffset < 0)
                 {
                     break;
                 }
 
-                string entryPointName = slotSort[i];
-                string entryPointPath = entryPointName.Length > 0 ?
-                    entryPoints[entryPointName] : String.Empty;
+                var entryPointName = slotSort[i];
+                var entryPointPath = entryPointName.Length > 0 ?
+                    entryPoints[entryPointName] : string.Empty;
 
                 if (entryPointName.Length > MAX_ENTRYPOINT_NAME)
                 {
-                    throw new ArgumentException(String.Format(
+                    throw new ArgumentException(string.Format(
                         "Entry point name exceeds limit of {0} characters: {1}",
                         MAX_ENTRYPOINT_NAME,
                         entryPointName));
@@ -540,14 +538,14 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
 
                 if (entryPointPath.Length > MAX_ENTRYPOINT_PATH)
                 {
-                    throw new ArgumentException(String.Format(
+                    throw new ArgumentException(string.Format(
                         "Entry point path exceeds limit of {0} characters: {1}",
                         MAX_ENTRYPOINT_PATH,
                         entryPointPath));
                 }
 
-                byte[] replaceNameBytes = Encoding.ASCII.GetBytes(entryPointName);
-                byte[] replacePathBytes = Encoding.Unicode.GetBytes(entryPointPath);
+                var replaceNameBytes = Encoding.ASCII.GetBytes(entryPointName);
+                var replacePathBytes = Encoding.Unicode.GetBytes(entryPointPath);
 
                 MakeSfxCA.ReplaceBytes(fileBytes, nameOffset, MAX_ENTRYPOINT_NAME, replaceNameBytes);
                 MakeSfxCA.ReplaceBytes(fileBytes, pathOffset, MAX_ENTRYPOINT_PATH * 2, replacePathBytes);
@@ -556,33 +554,33 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
             if (entryPoints.Count == 0 && uiClass != null)
             {
                 // Remove the zzz prefix from exported EmbeddedUI entry-points.
-                foreach (string export in new string[] { "InitializeEmbeddedUI", "EmbeddedUIHandler", "ShutdownEmbeddedUI" })
+                foreach (var export in new string[] { "InitializeEmbeddedUI", "EmbeddedUIHandler", "ShutdownEmbeddedUI" })
                 {
-                    byte[] exportNameBytes = Encoding.ASCII.GetBytes("zzz" + export);
+                    var exportNameBytes = Encoding.ASCII.GetBytes("zzz" + export);
 
-                    int exportOffset = MakeSfxCA.FindBytes(fileBytes, exportNameBytes);
+                    var exportOffset = MakeSfxCA.FindBytes(fileBytes, exportNameBytes);
                     if (exportOffset < 0)
                     {
                         throw new ArgumentException("Input SfxCA.dll does not contain exported entry-point: " + export);
                     }
 
-                    byte[] replaceNameBytes = Encoding.ASCII.GetBytes(export);
+                    var replaceNameBytes = Encoding.ASCII.GetBytes(export);
                     MakeSfxCA.ReplaceBytes(fileBytes, exportOffset, exportNameBytes.Length, replaceNameBytes);
                 }
 
                 if (uiClass.Length > MAX_ENTRYPOINT_PATH)
                 {
-                    throw new ArgumentException(String.Format(
+                    throw new ArgumentException(string.Format(
                         "UI class full name exceeds limit of {0} characters: {1}",
                         MAX_ENTRYPOINT_PATH,
                         uiClass));
                 }
 
-                byte[] templateBytes = Encoding.Unicode.GetBytes("InitializeEmbeddedUI_FullClassName");
-                byte[] replaceBytes = Encoding.Unicode.GetBytes(uiClass);
+                var templateBytes = Encoding.Unicode.GetBytes("InitializeEmbeddedUI_FullClassName");
+                var replaceBytes = Encoding.Unicode.GetBytes(uiClass);
 
                 // Fill in the embedded UI implementor class so the proxy knows which one to load.
-                int replaceOffset = MakeSfxCA.FindBytes(fileBytes, templateBytes);
+                var replaceOffset = MakeSfxCA.FindBytes(fileBytes, templateBytes);
                 if (replaceOffset >= 0)
                 {
                     MakeSfxCA.ReplaceBytes(fileBytes, replaceOffset, MAX_ENTRYPOINT_PATH * 2, replaceBytes);
@@ -597,7 +595,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// </summary>
         private static int FindBytes(byte[] source, byte[] find)
         {
-            for (int i = 0; i < source.Length; i++)
+            for (var i = 0; i < source.Length; i++)
             {
                 int j;
                 for (j = 0; j < find.Length; j++)
@@ -624,7 +622,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         private static void ReplaceBytes(
             byte[] source, int offset, int length, byte[] replace)
         {
-            for (int i = 0; i < length; i++)
+            for (var i = 0; i < length; i++)
             {
                 if (i < replace.Length)
                 {
@@ -658,12 +656,12 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         /// </remarks>
         private static IDictionary<string, string> GetPackFileMap(IList<string> inputs)
         {
-            Dictionary<string, string> fileMap = new Dictionary<string, string>();
-            foreach (string inputFile in inputs)
+            var fileMap = new Dictionary<string, string>();
+            foreach (var inputFile in inputs)
             {
                 if (inputFile.IndexOf('=') > 0)
                 {
-                    string[] parse = inputFile.Split('=');
+                    var parse = inputFile.Split('=');
                     if (!fileMap.ContainsKey(parse[0]))
                     {
                         fileMap.Add(parse[0], parse[1]);
@@ -671,7 +669,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
                 }
                 else
                 {
-                    string fileName = Path.GetFileName(inputFile);
+                    var fileName = Path.GetFileName(inputFile);
                     if (!fileMap.ContainsKey(fileName))
                     {
                         fileMap.Add(fileName, inputFile);
@@ -689,7 +687,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
         {
             log.WriteLine("Packaging files");
 
-            CabInfo cabInfo = new CabInfo(outputFile);
+            var cabInfo = new CabInfo(outputFile);
             cabInfo.PackFileSet(null, fileMap, CompressionLevel.Max, PackProgress);
         }
 
@@ -704,7 +702,7 @@ namespace WixToolset.Dtf.Tools.MakeSfxCA
             log.WriteLine("Copying file version info from {0} to {1}",
                 sourceFile, destFile);
 
-            ResourceCollection rc = new ResourceCollection();
+            var rc = new ResourceCollection();
             rc.Find(sourceFile, ResourceType.Version);
             rc.Load(sourceFile);
             rc.Save(destFile);

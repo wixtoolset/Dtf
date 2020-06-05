@@ -1,8 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
-
-
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -23,7 +21,6 @@
       <Platform>x64</Platform>
     </ProjectConfiguration>
   </ItemGroup>
-
   <PropertyGroup Label="Globals">
     <ProjectGuid>{55D5BA28-D427-4F53-80C2-FE9EF23C1553}</ProjectGuid>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
@@ -31,13 +28,38 @@
     <CharacterSet>Unicode</CharacterSet>
     <ProjectModuleDefinitionFile>EntryPoints.def</ProjectModuleDefinitionFile>
   </PropertyGroup>
-
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.props" />
-
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <PlatformToolset>v141</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="Shared">
+  </ImportGroup>
+  <!--Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.props" /-->
   <PropertyGroup>
     <ProjectAdditionalLinkLibraries>msi.lib;cabinet.lib;shlwapi.lib</ProjectAdditionalLinkLibraries>
   </PropertyGroup>
-
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
+      <ClCompile>
+          <PrecompiledHeader>Create</PrecompiledHeader>
+      </ClCompile>
+  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClrHost.cpp" />
     <ClCompile Include="Extract.cpp" />
@@ -46,21 +68,19 @@
     <ClCompile Include="SfxUtil.cpp" />
     <ClCompile Include="EmbeddedUI.cpp" />
   </ItemGroup>
-
   <ItemGroup>
     <ClInclude Include="precomp.h" />
     <ClInclude Include="EntryPoints.h" />
     <ClInclude Include="RemoteMsiSession.h" />
     <ClInclude Include="SfxUtil.h" />
   </ItemGroup>
-
   <ItemGroup>
     <None Include="EntryPoints.def" />
   </ItemGroup>
-
   <ItemGroup>
     <ResourceCompile Include="SfxCA.rc" />
   </ItemGroup>
-
-  <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.targets" />
+  <!--Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.targets" /-->
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets" />
 </Project>

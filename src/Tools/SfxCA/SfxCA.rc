@@ -5,8 +5,8 @@
 #define VER_ORIGINAL_FILENAME "SfxCA.dll"
 #define VER_INTERNAL_NAME "SfxCA"
 #define VER_FILE_DESCRIPTION "DTF Self-Extracting Custom Action"
-#include "wixver.h"
-#include "wix.rc"
+//#include "wixver.h"
+//#include "wix.rc"
 
 // Additional resources here
 

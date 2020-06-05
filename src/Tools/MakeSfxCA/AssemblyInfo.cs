@@ -3,3 +3,7 @@
 using System.Reflection;
 
 [assembly: AssemblyDescription("Custom action packaging tool.")]
+[assembly: AssemblyCompany("WiX Toolset Team")]
+[assembly: AssemblyProduct("WiX Toolset")]
+[assembly: AssemblyCopyright("Copyright (c) .NET Foundation and contributors. All rights reserved.")]
+
