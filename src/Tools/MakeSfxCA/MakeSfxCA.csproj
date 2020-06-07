@@ -21,12 +21,8 @@
     <ApplicationRevision>0</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <IsWebBootstrapper>false</IsWebBootstrapper>
-    <UseApplicationTrust>false</UseApplicationTrust>
-    <BootstrapperEnabled>true</BootstrapperEnabled>
-    <NuGetPackageImportStamp>
-    </NuGetPackageImportStamp>
   </PropertyGroup>
-    <ItemGroup>
+  <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MakeSfxCA.cs" />
     <None Include="app.config" />
@@ -46,14 +42,15 @@
       <Name>WixToolset.Dtf.Resources</Name>
     </ProjectReference>
   </ItemGroup>
-    <ItemGroup>
+  <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
 
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 
-  <Target Name="AfterBuild" Condition=" '$(NCrunch)' == '' ">
-    <Exec Command="nuget pack $(MSBuildThisFile) -Symbols -IncludeReferencedProjects -OutputDirectory $(OutputPath) -Properties Configuration=$(Configuration)" />
+  <Target Name="CustomPack" Condition=" '$(NCrunch)' == '' ">
+      <!--Exec Command="nuget pack $(MSBuildThisFile) -Symbols -IncludeReferencedProjects -OutputDirectory $(OutputPath) -Properties Configuration=$(Configuration)" /-->
+    <Exec Command="nuget pack $(TargetName).nuspec -OutputDirectory &quot;$(BaseOutputPath)$(Configuration)&quot; -Properties Configuration=$(Configuration);Id=$(TargetName);Version=&quot;$(BuildVersionSimple)&quot;;Authors=&quot;$(Authors)&quot;;Copyright=&quot;$(Copyright)&quot;;Description=&quot;$(Description)&quot;;Title=&quot;$(Title)&quot;" />
   </Target>
   <Import Project="..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets" Condition="Exists('..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">

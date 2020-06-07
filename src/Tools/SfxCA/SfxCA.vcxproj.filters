@@ -57,5 +57,6 @@
     <None Include="EntryPoints.def">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="packages.config" />
   </ItemGroup>
 </Project>

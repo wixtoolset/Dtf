@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<package >
+  <metadata>
+    <id>$id$</id>
+    <version>$version$</version>
+    <authors>$authors$</authors>
+    <owners>$authors$</owners>
+    <license type="expression">MS-RL</license>
+    <projectUrl>https://github.com/wixtoolset/Dtf/tree/master/src/Tools/MakeSfxCA</projectUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>$description$</description>
+    <copyright>$copyright$</copyright>
+  </metadata>
+
+  <files>
+    <file src="..\..\..\build\$configuration$\x64\SfxCA.dll" target="tools\bin\x64\SfxCA.dll" />
+    <file src="..\..\..\build\$configuration$\x86\SfxCA.dll" target="tools\bin\x86\SfxCA.dll" />
+    <file src="..\..\..\build\$configuration$\WixToolset.Dtf.Compression.dll" target="tools\bin\WixToolset.Dtf.Compression.dll" />
+	<file src="..\..\..\build\$configuration$\WixToolset.Dtf.Compression.Cab.dll" target="tools\bin\WixToolset.Dtf.Compression.Cab.dll" />
+	<file src="..\..\..\build\$configuration$\WixToolset.Dtf.Resources.dll" target="tools\bin\WixToolset.Dtf.Resources.dll" />
+    <file src="..\..\..\build\$configuration$\MakeSfxCA.exe" target="tools\bin\MakeSfxCA.exe" />
+	<file src="..\..\..\build\$configuration$\MakeSfxCA.exe.config" target="tools\bin\MakeSfxCA.exe.config" />   
+  </files>
+</package>
