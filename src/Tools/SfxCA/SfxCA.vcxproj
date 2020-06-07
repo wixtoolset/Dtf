@@ -25,44 +25,22 @@
     <ProjectGuid>{55D5BA28-D427-4F53-80C2-FE9EF23C1553}</ProjectGuid>
     <ConfigurationType>DynamicLibrary</ConfigurationType>
     <TargetName>SfxCA</TargetName>
+    <PlatformToolset>v141</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <ProjectModuleDefinitionFile>EntryPoints.def</ProjectModuleDefinitionFile>
+    <Description>WiX Toolset Util CustomAction</Description>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
-      <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
-  <PropertyGroup Label="Configuration" Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <PlatformToolset>v141</PlatformToolset>
-  </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
-  <ImportGroup Label="ExtensionSettings">
-  </ImportGroup>
-  <ImportGroup Label="Shared">
-  </ImportGroup>
-  <!--Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.props" /-->
   <PropertyGroup>
     <ProjectAdditionalLinkLibraries>msi.lib;cabinet.lib;shlwapi.lib</ProjectAdditionalLinkLibraries>
   </PropertyGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
-    <ClCompile>
-      <PrecompiledHeader>Create</PrecompiledHeader>
-    </ClCompile>
-  </ItemDefinitionGroup>
-  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
-      <ClCompile>
-          <PrecompiledHeader>Create</PrecompiledHeader>
-      </ClCompile>
-  </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ClrHost.cpp" />
     <ClCompile Include="Extract.cpp" />
+    <ClCompile Include="precomp.cpp">
+        <PrecompiledHeader>Create</PrecompiledHeader>
+    </ClCompile>
     <ClCompile Include="RemoteMsi.cpp" />
     <ClCompile Include="SfxCA.cpp" />
     <ClCompile Include="SfxUtil.cpp" />
@@ -80,7 +58,5 @@
   <ItemGroup>
     <ResourceCompile Include="SfxCA.rc" />
   </ItemGroup>
-  <!--Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.targets" /-->
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
-  <ImportGroup Label="ExtensionTargets" />
 </Project>

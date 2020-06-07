@@ -1,4 +1,4 @@
-﻿<!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
+<!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
 <Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <ProjectGuid>{DB9E5F02-8241-440A-9B60-980EB5B42B13}</ProjectGuid>
@@ -8,18 +8,7 @@
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <RunPostBuildEvent>OnBuildSuccess</RunPostBuildEvent>
   </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>x86</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Release\</OutputPath>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
-    <PlatformTarget>x64</PlatformTarget>
-    <OutputPath>bin\x64\Debug\</OutputPath>
-  </PropertyGroup>
-  <ItemGroup>
+    <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="SampleCAs.cs" />
   </ItemGroup>
@@ -32,11 +21,13 @@
       <Name>WixToolset.Dtf.WindowsInstaller</Name>
     </ProjectReference>
   </ItemGroup>
-  <!--Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildProjectDirectory), wix.proj))\tools\WixBuild.targets" /-->
-  <!--
+
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+
+    <!--
   <PropertyGroup>
     <PostBuildEvent>"$(TargetDir)..\x86\MakeSfxCA.exe" "$(TargetPath)" "$(TargetDir)SfxCA.dll" "$(IntermediateOutputPath)$(TargetFileName)" WixToolset.Dtf.WindowsInstaller.dll="$(TargetDir)WixToolset.Dtf.WindowsInstaller.dll" testsub\SampleCAs.cs="$(ProjectDir)\SampleCAs.cs"</PostBuildEvent>
   </PropertyGroup>
 -->
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  
 </Project>
