@@ -7,28 +7,18 @@
     <RootNamespace>WixToolset.Dtf.Tools.MakeSfxCA</RootNamespace>
     <AssemblyName>MakeSfxCA</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <PlatformTarget>x86</PlatformTarget>
-    <PublishUrl>publish\</PublishUrl>
-    <Install>true</Install>
-    <InstallFrom>Disk</InstallFrom>
-    <UpdateEnabled>false</UpdateEnabled>
-    <UpdateMode>Foreground</UpdateMode>
-    <UpdateInterval>7</UpdateInterval>
-    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
-    <UpdatePeriodically>false</UpdatePeriodically>
-    <UpdateRequired>false</UpdateRequired>
-    <MapFileExtensions>true</MapFileExtensions>
-    <ApplicationRevision>0</ApplicationRevision>
-    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
-    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PlatformTarget>x86</PlatformTarget>    
   </PropertyGroup>
+  
   <ItemGroup>
     <Compile Include="AssemblyInfo.cs" />
     <Compile Include="MakeSfxCA.cs" />
     <None Include="app.config" />
     <None Include="packages.config" />
   </ItemGroup>
+  
   <ItemGroup>
+    <Reference Include="System" />
     <ProjectReference Include="..\..\WixToolset.Dtf.Compression.Cab\WixToolset.Dtf.Compression.Cab.csproj">
       <Project>{15895fd1-dd68-407b-8717-08f6dd14f02c}</Project>
       <Name>WixToolset.Dtf.Compression.Cab</Name>
@@ -40,18 +30,11 @@
     <ProjectReference Include="..\..\WixToolset.Dtf.Resources\WixToolset.Dtf.Resources.csproj">
       <Project>{44931ecb-8d6f-4c12-a872-64e261b6a98e}</Project>
       <Name>WixToolset.Dtf.Resources</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="System" />
+    </ProjectReference>   
   </ItemGroup>
 
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 
-  <Target Name="CustomPack" Condition=" '$(NCrunch)' == '' ">
-      <!--Exec Command="nuget pack $(MSBuildThisFile) -Symbols -IncludeReferencedProjects -OutputDirectory $(OutputPath) -Properties Configuration=$(Configuration)" /-->
-    <Exec Command="nuget pack $(TargetName).nuspec -OutputDirectory &quot;$(BaseOutputPath)$(Configuration)&quot; -Properties Configuration=$(Configuration);Id=$(TargetName);Version=&quot;$(BuildVersionSimple)&quot;;Authors=&quot;$(Authors)&quot;;Copyright=&quot;$(Copyright)&quot;;Description=&quot;$(Description)&quot;;Title=&quot;$(Title)&quot;" />
-  </Target>
   <Import Project="..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets" Condition="Exists('..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
