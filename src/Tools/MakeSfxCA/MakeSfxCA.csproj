@@ -8,6 +8,7 @@
     <AssemblyName>MakeSfxCA</AssemblyName>
     <TargetFrameworks>net461;netcoreapp2.1</TargetFrameworks>
   </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="Nerdbank.GitVersioning" Version="2.0.41">
       <PrivateAssets>all</PrivateAssets>
@@ -20,6 +21,7 @@
     <ProjectReference Include="..\..\WixToolset.Dtf.Compression\WixToolset.Dtf.Compression.csproj" />
     <ProjectReference Include="..\..\WixToolset.Dtf.Resources\WixToolset.Dtf.Resources.csproj" />
   </ItemGroup>
+
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
