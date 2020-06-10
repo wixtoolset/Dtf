@@ -11,8 +11,7 @@
   </metadata>
 
   <files>
-    <file src="$projectFolder$$id$.props" target="build" />
-    <file src="net461\*" target="tools\net461" />
-    <file src="netcoreapp2.1\*" target="tools\netcoreapp2.1" />
+    <file src="build\**\*" target="build" />
+    <file src="tools\**\*" target="tools" />
   </files>
 </package>
