@@ -13,5 +13,13 @@
   <files>
     <file src="build\**\*" target="build" />
     <file src="tools\**\*" target="tools" />
+	<file src="x64\SfxCA.dll" target="x64\SfxCA.dll" />
+	<file src="x86\SfxCA.dll" target="x86\SfxCA.dll" />
+	<file src="MakeSfxCA.exe" target="MakeSfxCA.exe" />
+	<file src="*.dll" target="." />
+	<file src="*.config" target="." />
+	<file src="*.xml" target="." />
+	<file src="MakeSfxCA.deps.json" target="MakeSfxCA.deps.json" />
+	<file src="MakeSfxCA.runtimeconfig.json" target="MakeSfxCA.runtimeconfig.json" />
   </files>
 </package>

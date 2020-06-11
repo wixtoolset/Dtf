@@ -8,7 +8,6 @@
     <RootNamespace>WixToolset.Dtf.Compression</RootNamespace>
     <AssemblyName>WixToolset.Dtf.Compression</AssemblyName>
     <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <TargetFrameworkProfile />
   </PropertyGroup>
 
   <ItemGroup>

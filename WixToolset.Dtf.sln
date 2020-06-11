@@ -41,7 +41,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ManagedCA", "src\Samples\Ma
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EmbeddedUI", "src\Samples\EmbeddedUI\EmbeddedUI.csproj", "{864B8C50-7895-4485-AC89-900D86FD8C0D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WixToolset.Dtf.MSBuild", "src\WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj", "{E7A00377-A0B5-400F-8337-C0814AAC7153}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WixToolset.Dtf.MSBuild", "src\WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj", "{E7A00377-A0B5-400F-8337-C0814AAC7153}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -224,7 +224,6 @@ Global
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Debug|x86.Build.0 = Debug|Any CPU
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Release|x64.ActiveCfg = Release|Any CPU
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Release|x64.Build.0 = Release|Any CPU
 		{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}.Release|x86.ActiveCfg = Release|Any CPU
@@ -260,7 +259,6 @@ Global
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Debug|x86.ActiveCfg = Debug|Any CPU
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Debug|x86.Build.0 = Debug|Any CPU
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Release|Any CPU.Build.0 = Release|Any CPU
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Release|x64.ActiveCfg = Release|Any CPU
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Release|x64.Build.0 = Release|Any CPU
 		{E7A00377-A0B5-400F-8337-C0814AAC7153}.Release|x86.ActiveCfg = Release|Any CPU

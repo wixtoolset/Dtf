@@ -13,7 +13,7 @@
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(CreateDocumentation)'!='false' ">
+  <PropertyGroup Condition=" '$(UsingMicrosoftNETSdk)'!='true' and  '$(CreateDocumentation)'!='false' ">
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 </Project>

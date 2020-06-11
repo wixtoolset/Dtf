@@ -1,15 +1,18 @@
 @setlocal
 @pushd %~dp0
-@set _P=%~dp0build\Release\publish
+@set _C=Release
+@set _P=%~dp0build\%_C%\publish
+@set _S=%~dp0src\
 
 nuget restore
 
-dotnet publish -c Release -o %_P%\WixToolset.Dtf.MSBuild\net461\ -f net461 src\Tools\MakeSfxCA 
-dotnet publish -c Release -o %_P%\WixToolset.Dtf.MSBuild\netcoreapp2.1\ -f netcoreapp2.1 src\Tools\MakeSfxCA
+msbuild -p:Configuration=%_C%
+msbuild %_S%Tools\SfxCA\SfxCA.vcxproj -p:Configuration=%_C% -p:Platform="x64" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\\"
+msbuild %_S%Tools\SfxCA\SfxCA.vcxproj -p:Configuration=%_C% -p:Platform="x86" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\\"
+msbuild %_S%Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild"
+msbuild %_S%WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild"
 
-dotnet pack -c Release src\WixToolset.Dtf.MSBuild
-
-msbuild -p:Configuration=Release
+msbuild %_S%WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -target:Pack -p:Configuration=%_C%
 
 @popd
 @endlocal
