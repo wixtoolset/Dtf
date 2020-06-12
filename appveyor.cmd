@@ -13,6 +13,10 @@ msbuild %_S%Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:TargetFram
 msbuild %_S%Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:TargetFramework="netcoreapp2.1" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\tools\netcoreapp2.1"
 msbuild %_S%WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild"
 
+msbuild %_S%WixToolset.Dtf.Compression\WixToolset.Dtf.Compression.csproj -p:Configuration=%_C% -t:CustomBuild
+msbuild %_S%WixToolset.Dtf.Compression.Cab\WixToolset.Dtf.Compression.Cab.csproj -p:Configuration=%_C% -t:CustomBuild
+msbuild %_S%WixToolset.Dtf.Resources\WixToolset.Dtf.Resources.csproj -p:Configuration=%_C% -t:CustomBuild
+
 msbuild %_S%WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -target:Pack -p:Configuration=%_C%
 
 @popd
