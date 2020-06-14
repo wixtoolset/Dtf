@@ -5,6 +5,8 @@
     <version>$version$</version>
     <authors>$authors$</authors>
     <owners>$authors$</owners>
+	<license type="expression">MS-RL</license>
+	<!-- <licenseUrl>https://licenses.nuget.org/MS-RL</licenseUrl> -->
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>$description$</description>
     <copyright>$copyright$</copyright>
@@ -13,7 +15,5 @@
   <files>
     <file src="build\**\*" target="build" />
     <file src="tools**" target="." />
-    <file src="x64\SfxCA.dll" target="x64\SfxCA.dll" />
-	<file src="x86\SfxCA.dll" target="x86\SfxCA.dll" />
   </files>
 </package>

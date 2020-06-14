@@ -74,7 +74,7 @@
 
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
 
-  <Target Name="AfterBuild" Condition=" '$(NCrunch)' == '' ">
+  <Target Name="CustomBuild" Condition=" '$(NCrunch)' == '' ">
     <Exec Command="nuget pack $(MSBuildThisFile) -Symbols -IncludeReferencedProjects -OutputDirectory $(OutputPath) -Properties Configuration=$(Configuration)" />
   </Target>
 
