@@ -8,17 +8,14 @@
     <RootNamespace>WixToolset.Dtf.Tools.MakeSfxCA</RootNamespace>
     <AssemblyName>MakeSfxCA</AssemblyName>    
     <DebugType>embedded</DebugType>
-    <RuntimeIdentifier Condition=" '$(RuntimeIdentifier)'=='' and '$(TargetFramework)'!='netcoreapp2.1' ">win-x86</RuntimeIdentifier>
     <AppConfig>app.config</AppConfig>
     <ApplicationManifest>MakeSfxCA.exe.manifest</ApplicationManifest>
     <RollForward>Major</RollForward>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Nerdbank.GitVersioning" Version="2.1.65">
-      <PrivateAssets>all</PrivateAssets>
-      <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
-    </PackageReference>
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.1.65" PrivateAssets="All" />
   </ItemGroup>
 
   <ItemGroup>
@@ -31,6 +28,6 @@
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Nerdbank.GitVersioning.2.1.65\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Nerdbank.GitVersioning.2.1.65\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>

@@ -3,6 +3,6 @@
 
 <Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
   <PropertyGroup>
-    <WixTargetsPath Condition=" '$(WixTargetsPath)' == '' ">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\wix.ca.targets'))</WixTargetsPath>
+    <WixCATargetsPath Condition=" '$(WixCATargetsPath)' == '' ">$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\tools\wix.ca.targets'))</WixCATargetsPath>
   </PropertyGroup>
 </Project>
