@@ -8,12 +8,12 @@
     <DefineConstants>$(DefineConstants);DEBUG;TRACE</DefineConstants>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
-    <DebugSymbols>true</DebugSymbols>
+    <DebugSymbols>false</DebugSymbols>
     <Optimize>true</Optimize>
     <DefineConstants>$(DefineConstants);TRACE</DefineConstants>
   </PropertyGroup>
 
-  <PropertyGroup Condition=" '$(CreateDocumentation)'!='false' ">
+  <PropertyGroup Condition=" '$(UsingMicrosoftNETSdk)'!='true' and  '$(CreateDocumentation)'!='false' ">
     <DocumentationFile>$(OutputPath)\$(AssemblyName).xml</DocumentationFile>
   </PropertyGroup>
 </Project>

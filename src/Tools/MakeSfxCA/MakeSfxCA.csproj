@@ -1,45 +1,33 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information. -->
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+<Project Sdk="Microsoft.NET.Sdk">
   <PropertyGroup>
-    <ProjectGuid>{3F246CE0-153D-4AC3-B6AC-5EAD8E2AD04B}</ProjectGuid>
+    <TargetFrameworks>netcoreapp2.1;net461</TargetFrameworks>
     <OutputType>Exe</OutputType>
     <RootNamespace>WixToolset.Dtf.Tools.MakeSfxCA</RootNamespace>
-    <AssemblyName>MakeSfxCA</AssemblyName>
-    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
-    <PlatformTarget>x86</PlatformTarget>    
+    <AssemblyName>MakeSfxCA</AssemblyName>    
+    <DebugType>embedded</DebugType>
+    <AppConfig>app.config</AppConfig>
+    <ApplicationManifest>MakeSfxCA.exe.manifest</ApplicationManifest>
+    <RollForward>Major</RollForward>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
-  
+
   <ItemGroup>
-    <Compile Include="AssemblyInfo.cs" />
-    <Compile Include="MakeSfxCA.cs" />
-    <None Include="app.config" />
-    <None Include="packages.config" />
-  </ItemGroup>
-  
-  <ItemGroup>
-    <Reference Include="System" />
-    <ProjectReference Include="..\..\WixToolset.Dtf.Compression.Cab\WixToolset.Dtf.Compression.Cab.csproj">
-      <Project>{15895fd1-dd68-407b-8717-08f6dd14f02c}</Project>
-      <Name>WixToolset.Dtf.Compression.Cab</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WixToolset.Dtf.Compression\WixToolset.Dtf.Compression.csproj">
-      <Project>{2d62850c-9f81-4be9-bdf3-9379389c8f7b}</Project>
-      <Name>WixToolset.Dtf.Compression</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\..\WixToolset.Dtf.Resources\WixToolset.Dtf.Resources.csproj">
-      <Project>{44931ecb-8d6f-4c12-a872-64e261b6a98e}</Project>
-      <Name>WixToolset.Dtf.Resources</Name>
-    </ProjectReference>   
+    <PackageReference Include="Nerdbank.GitVersioning" Version="2.1.65" PrivateAssets="All" />
   </ItemGroup>
 
-  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <ProjectReference Include="..\..\WixToolset.Dtf.Compression.Cab\WixToolset.Dtf.Compression.Cab.csproj" />
+    <ProjectReference Include="..\..\WixToolset.Dtf.Compression\WixToolset.Dtf.Compression.csproj" />
+    <ProjectReference Include="..\..\WixToolset.Dtf.Resources\WixToolset.Dtf.Resources.csproj" />
+  </ItemGroup>
 
-  <Import Project="..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets" Condition="Exists('..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets')" />
   <Target Name="EnsureNuGetPackageBuildImports" BeforeTargets="PrepareForBuild">
     <PropertyGroup>
       <ErrorText>This project references NuGet package(s) that are missing on this computer. Use NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=322105. The missing file is {0}.</ErrorText>
     </PropertyGroup>
-    <Error Condition="!Exists('..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Nerdbank.GitVersioning.2.0.41\build\Nerdbank.GitVersioning.targets'))" />
+    <Error Condition="!Exists('..\..\..\packages\Nerdbank.GitVersioning.2.1.65\build\Nerdbank.GitVersioning.targets')" Text="$([System.String]::Format('$(ErrorText)', '..\..\..\packages\Nerdbank.GitVersioning.2.1.65\build\Nerdbank.GitVersioning.targets'))" />
   </Target>
 </Project>
