@@ -11,7 +11,7 @@
     <AppConfig>app.config</AppConfig>
     <ApplicationManifest>MakeSfxCA.exe.manifest</ApplicationManifest>
     <RollForward>Major</RollForward>
-    <PlatformTarget>x86</PlatformTarget>
+    <RuntimeIdentifier>win-x86</RuntimeIdentifier>
   </PropertyGroup>
 
   <ItemGroup>
