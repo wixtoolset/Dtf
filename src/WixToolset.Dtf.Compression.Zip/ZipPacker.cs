@@ -278,7 +278,7 @@ namespace WixToolset.Dtf.Compression.Zip
             {
                 // TODO: call GetOption to get compression method for the specific file
                 ZipCompressionMethod compressionMethod = ZipCompressionMethod.Deflate;
-                if (this.CompressionLevel == CompressionLevel.None)
+                if (this.CompressionLevel == WixToolset.Dtf.Compression.CompressionLevel.None)
                 {
                     compressionMethod = ZipCompressionMethod.Store;
                 }

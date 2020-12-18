@@ -1,17 +1,8 @@
 // Copyright (c) .NET Foundation and contributors. All rights reserved. Licensed under the Microsoft Reciprocal License. See LICENSE.TXT file in the project root for full license information.
 
-using System;
-using System.Reflection;
-using System.Runtime.InteropServices;
+#if NET20
 using System.Security;
 using System.Security.Permissions;
-
-[assembly: AssemblyDescription("Abstract base libraries for archive packing and unpacking")]
-[assembly: AssemblyProduct("WiX Toolset")]
-[assembly: AssemblyCompany("WiX Toolset Team")]
-[assembly: AssemblyCopyright("Copyright (c) .NET Foundation and contributors. All rights reserved.")]
-[assembly: CLSCompliant(true)]
-[assembly: ComVisible(false)]
 
 [assembly: SecurityPermission(SecurityAction.RequestMinimum, Unrestricted = true)]
 
@@ -21,3 +12,4 @@ using System.Security.Permissions;
 // file I/O permission. Or they can even do in-memory compression and extraction
 // with absolutely no file I/O permission.
 [assembly: AllowPartiallyTrustedCallers]
+#endif
