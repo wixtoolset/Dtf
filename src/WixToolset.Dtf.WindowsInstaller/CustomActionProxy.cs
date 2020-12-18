@@ -201,6 +201,7 @@ namespace WixToolset.Dtf.WindowsInstaller
             }
             else
             {
+#if NET20
                 IDictionary config;
                 try
                 {
@@ -221,6 +222,9 @@ namespace WixToolset.Dtf.WindowsInstaller
                         entryPoint);
                     return false;
                 }
+#else
+                throw new NotImplementedException();
+#endif
             }
 
             int assemblySplit = fullEntryPoint.IndexOf('!');

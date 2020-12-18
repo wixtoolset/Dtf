@@ -111,7 +111,9 @@ namespace WixToolset.Dtf.Resources
         [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Load(string file)
         {
+#if NET20
             new FileIOPermission(FileIOPermissionAccess.Read, file).Demand();
+#endif
 
             IntPtr module = NativeMethods.LoadLibraryEx(file, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
             try
@@ -150,7 +152,9 @@ namespace WixToolset.Dtf.Resources
         [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Save(string file)
         {
+#if NET20
             new FileIOPermission(FileIOPermissionAccess.AllAccess, file).Demand();
+#endif
 
             IntPtr updateHandle = IntPtr.Zero;
             try

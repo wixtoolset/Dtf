@@ -32,7 +32,6 @@ namespace WixToolset.Dtf.Compression.Zip
         /// since this instance was created.
         /// </summary>
         [SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Crc")]
-        [CLSCompliant(false)]
         public uint Crc
         {
             get
