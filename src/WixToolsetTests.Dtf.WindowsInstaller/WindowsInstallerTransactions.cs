@@ -25,6 +25,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        [Ignore] // Requires elevation.
         public void InstallerTransactTwoProducts()
         {
             string dbFile1 = "InstallerTransactProduct1.msi";

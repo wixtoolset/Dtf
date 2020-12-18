@@ -37,6 +37,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        [Ignore] // Takes too long to run regularly.
         public void ZipExtremeFileCounts()
         {
             this.RunZipPackUnpack(66000, 10, 0);
@@ -55,6 +56,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [Timeout(36000000), TestMethod]
+        [Ignore] // Takes too long to run regularly.
         public void ZipExtremeFileSizes()
         {
             //this.RunZipPackUnpack(10, 512L * 1024 * 1024, 0); // 5GB
@@ -166,6 +168,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        //[Ignore] // Requires clean environment.
         public void ZipArchiveSizes()
         {
             Console.WriteLine("Testing various values for the maxArchiveSize parameter.");
@@ -241,6 +244,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        //[Ignore] // Requires clean environment.
         public void ZipInfoNullParams()
         {
             int fileCount = 10, fileSize = 1024;
