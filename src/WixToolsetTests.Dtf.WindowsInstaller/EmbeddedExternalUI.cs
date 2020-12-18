@@ -28,12 +28,13 @@ namespace WixToolset.Dtf.Test
                 InstallLogModes.CommonData;
 
 #if DEBUG
-        const string EmbeddedUISampleBinDir = @"..\..\..\..\..\build\debug\x86\";
+        const string EmbeddedUISampleBinDir = @"..\..\build\debug\";
 #else
-        const string EmbeddedUISampleBinDir = @"..\..\..\..\..\build\ship\x86\";
+        const string EmbeddedUISampleBinDir = @"..\..\build\release\";
 #endif
 
         [TestMethod]
+        [Ignore] // Requires elevation.
         public void EmbeddedUISingleInstall()
         {
             string dbFile = "EmbeddedUISingleInstall.msi";

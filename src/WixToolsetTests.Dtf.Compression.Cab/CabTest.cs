@@ -88,6 +88,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        [Ignore] // Takes ~5 minutes and 66000 is over the 65535 limit anyway.
         public void CabinetExtremeFileCounts()
         {
             this.RunCabinetPackUnpack(66000, 10);
@@ -129,6 +130,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [Timeout(36000000), TestMethod]
+        [Ignore] // Takes too long to run regularly.
         public void CabinetExtremeFileSizes()
         {
             this.RunCabinetPackUnpack(10, 512L * 1024 * 1024); // 5GB
@@ -681,6 +683,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        //[Ignore] // Requires clean environment.
         public void CabInfoProperties()
         {
             Exception caughtEx;
@@ -713,6 +716,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        //[Ignore] // Requires clean environment.
         public void CabInfoNullParams()
         {
             int fileCount = 10, fileSize = 1024;
@@ -839,6 +843,7 @@ namespace WixToolset.Dtf.Test
         }
 
         [TestMethod]
+        //[Ignore] // Requires clean environment.
         public void CabFileInfoProperties()
         {
             CabInfo cabInfo = new CabInfo("test.cab");
