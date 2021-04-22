@@ -11,7 +11,7 @@ msbuild src\Tools\SfxCA\SfxCA.vcxproj -p:Configuration=%_C% -p:Platform="x64" -p
 msbuild src\Tools\SfxCA\SfxCA.vcxproj -p:Configuration=%_C% -p:Platform="x86" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\tools\\" || exit /b
 
 msbuild src\Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:TargetFramework="net461" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\tools\net461" || exit /b
-msbuild src\Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:TargetFramework="netcoreapp2.1" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\tools\netcoreapp2.1" || exit /b
+msbuild src\Tools\MakeSfxCA\MakeSfxCA.csproj -p:Configuration=%_C% -p:TargetFramework="netcoreapp3.1" -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild\tools\netcoreapp3.1" || exit /b
 
 msbuild src\WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -p:Configuration=%_C% -p:OutputPath="%_P%\WixToolset.Dtf.MSBuild" || exit /b
 msbuild src\WixToolset.Dtf.MSBuild\WixToolset.Dtf.MSBuild.csproj -target:Pack -p:Configuration=%_C% || exit /b
