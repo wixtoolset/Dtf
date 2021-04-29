@@ -6,7 +6,6 @@ namespace WixToolset.Dtf.Compression.Zip
     using System.IO;
     using System.Resources;
     using System.Globalization;
-    using System.Security.Permissions;
     using System.Runtime.Serialization;
 
     /// <summary>
@@ -53,7 +52,6 @@ namespace WixToolset.Dtf.Compression.Zip
         /// </summary>
         /// <param name="info">The SerializationInfo that holds the serialized object data about the exception being thrown.</param>
         /// <param name="context">The StreamingContext that contains contextual information about the source or destination.</param>
-        [SecurityPermission(SecurityAction.Demand, SerializationFormatter=true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
             base.GetObjectData(info, context);

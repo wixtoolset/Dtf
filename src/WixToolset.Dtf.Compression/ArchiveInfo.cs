@@ -8,7 +8,6 @@ namespace WixToolset.Dtf.Compression
     using System.Globalization;
     using System.Text;
     using System.Text.RegularExpressions;
-    using System.Security.Permissions;
     using System.Runtime.Serialization;
     using System.Diagnostics.CodeAnalysis;
 

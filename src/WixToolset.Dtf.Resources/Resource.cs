@@ -5,7 +5,6 @@ namespace WixToolset.Dtf.Resources
     using System;
     using System.IO;
     using System.Text;
-    using System.Security.Permissions;
     using System.Reflection;
     using System.Collections;
     using System.Globalization;
@@ -107,14 +106,8 @@ namespace WixToolset.Dtf.Resources
         /// Loads the resource data from a file.  The file is searched for a resource with matching type, name, and locale.
         /// </summary>
         /// <param name="file">Win32 PE file containing the resource</param>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Load(string file)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.Read, file).Demand();
-#endif
-
             IntPtr module = NativeMethods.LoadLibraryEx(file, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
             try
             {
@@ -148,14 +141,8 @@ namespace WixToolset.Dtf.Resources
         /// Saves the resource to a file.  Any existing resource data with matching type, name, and locale is overwritten.
         /// </summary>
         /// <param name="file">Win32 PE file to contain the resource</param>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Save(string file)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.AllAccess, file).Demand();
-#endif
-
             IntPtr updateHandle = IntPtr.Zero;
             try
             {

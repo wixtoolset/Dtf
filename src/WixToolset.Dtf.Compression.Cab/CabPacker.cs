@@ -5,7 +5,6 @@ namespace WixToolset.Dtf.Compression.Cab
     using System;
     using System.IO;
     using System.Text;
-    using System.Security.Permissions;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.InteropServices;
@@ -147,9 +146,6 @@ namespace WixToolset.Dtf.Compression.Cab
             this.CheckError(false);
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Pack(
             IPackStreamContext streamContext,
             IEnumerable<string> files,

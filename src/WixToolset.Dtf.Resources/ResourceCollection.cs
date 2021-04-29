@@ -5,7 +5,6 @@ namespace WixToolset.Dtf.Resources
     using System;
     using System.IO;
     using System.Text;
-    using System.Security.Permissions;
     using System.Reflection;
     using System.Collections;
     using System.Collections.Generic;
@@ -45,14 +44,8 @@ namespace WixToolset.Dtf.Resources
         /// </summary>
         /// <param name="resFile">The file to be searched for resources.</param>
         /// <exception cref="IOException">resources could not be read from the file</exception>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Find(string resFile)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.Read, resFile).Demand();
-#endif
-
             this.Clear();
 
             IntPtr module = NativeMethods.LoadLibraryEx(resFile, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
@@ -82,14 +75,8 @@ namespace WixToolset.Dtf.Resources
         /// <param name="resFile">The file to be searched for resources.</param>
         /// <param name="type">The type of resource to search for; may be one of the ResourceType constants or a user-defined type.</param>
         /// <exception cref="IOException">resources could not be read from the file</exception>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Find(string resFile, ResourceType type)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.Read, resFile).Demand();
-#endif
-
             this.Clear();
 
             IntPtr module = NativeMethods.LoadLibraryEx(resFile, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
@@ -115,14 +102,8 @@ namespace WixToolset.Dtf.Resources
         /// <param name="type">The type of resource to search for; may be one of the ResourceType constants or a user-defined type.</param>
         /// <param name="name">The name of the resource to search for.</param>
         /// <exception cref="IOException">resources could not be read from the file</exception>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Find(string resFile, ResourceType type, string name)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.Read, resFile).Demand();
-#endif
-
             this.Clear();
 
             IntPtr module = NativeMethods.LoadLibraryEx(resFile, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
@@ -196,14 +177,8 @@ namespace WixToolset.Dtf.Resources
         /// For all resources in the collection, loads their data from a resource file.
         /// </summary>
         /// <param name="file">The file from which resources are loaded.</param>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Load(string file)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.Read, file).Demand();
-#endif
-
             IntPtr module = NativeMethods.LoadLibraryEx(file, IntPtr.Zero, NativeMethods.LOAD_LIBRARY_AS_DATAFILE);
             try
             {
@@ -222,14 +197,8 @@ namespace WixToolset.Dtf.Resources
         /// For all resources in the collection, saves their data to a resource file.
         /// </summary>
         /// <param name="file">The file to which resources are saved.</param>
-        [SuppressMessage("Microsoft.Security", "CA2103:ReviewImperativeSecurity")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Save(string file)
         {
-#if NET20
-            new FileIOPermission(FileIOPermissionAccess.AllAccess, file).Demand();
-#endif
-
             IntPtr updateHandle = IntPtr.Zero;
             try
             {
