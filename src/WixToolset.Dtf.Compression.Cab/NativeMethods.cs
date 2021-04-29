@@ -5,7 +5,6 @@ namespace WixToolset.Dtf.Compression.Cab
 using System;
 using System.Text;
 using System.Security;
-using System.Security.Permissions;
 using System.Runtime.InteropServices;
 using System.Diagnostics.CodeAnalysis;
 
@@ -170,7 +169,6 @@ internal static class NativeMethods
             /// Releases the handle by calling FDIDestroy().
             /// </summary>
             /// <returns>True if the release succeeded.</returns>
-            [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
             protected override bool ReleaseHandle()
             {
                 return FCI.Destroy(this.handle);

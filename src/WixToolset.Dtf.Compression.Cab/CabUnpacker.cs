@@ -5,7 +5,6 @@ namespace WixToolset.Dtf.Compression.Cab
     using System;
     using System.IO;
     using System.Text;
-    using System.Security.Permissions;
     using System.Collections.Generic;
     using System.Globalization;
     using System.Runtime.InteropServices;
@@ -33,9 +32,6 @@ namespace WixToolset.Dtf.Compression.Cab
 
         private Predicate<string> filter;
 
-        [SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts")]
-        [SuppressMessage("Microsoft.Security", "CA2122:DoNotIndirectlyExposeMethodsWithLinkDemands")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public CabUnpacker(CabEngine cabEngine)
             : base(cabEngine)
         {
@@ -69,8 +65,6 @@ namespace WixToolset.Dtf.Compression.Cab
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public bool IsArchive(Stream stream)
         {
             if (stream == null)
@@ -86,8 +80,6 @@ namespace WixToolset.Dtf.Compression.Cab
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public IList<ArchiveFileInfo> GetFileInfo(
             IUnpackStreamContext streamContext,
             Predicate<string> fileFilter)
@@ -147,8 +139,6 @@ namespace WixToolset.Dtf.Compression.Cab
             }
         }
 
-        [SuppressMessage("Microsoft.Security", "CA2106:SecureAsserts")]
-        [SecurityPermission(SecurityAction.Assert, UnmanagedCode = true)]
         public void Unpack(
             IUnpackStreamContext streamContext,
             Predicate<string> fileFilter)
